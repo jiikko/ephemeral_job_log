@@ -1,10 +1,20 @@
+require_relative 'has_current'
+
+# TODO: shellランナーを提供する?
+# TODO: ログを書き出す最長保持サイズを設定する
+# TODO: 進捗率にも対応したい
+# TODO: 制御文字を出したい
+# TODO: read-multiを使う
+# TODO: EphemeralJobLog.configureでstoreを設定できるようにする
+
 module EphemeralJobLog
   class Base
-    include HasCurrent
+    include EphemeralJobLog::HasCurrent
 
     cattr_accessor :store, :history_size, :store_prefix_key
 
-    self.store = Rails.cache
+    # NOTE: recommended to use Rails.cache
+    # self.store = Rails.cache
     self.history_size = 10
 
     attr_accessor :status, :error_message, :finished_at
