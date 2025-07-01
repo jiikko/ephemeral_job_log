@@ -54,8 +54,9 @@ module EphemeralJobLog
       [store_prefix_key, position]
     end
 
-    def initialize
-      @id = SecureRandom.uuid
+    def initialize(id: nil)
+      @id = id || SecureRandom.uuid
+      raise "Job log with id #{@id} already exists" if self.class.find_by_id(@id)
       @created_at = Time.current
 
       begin
