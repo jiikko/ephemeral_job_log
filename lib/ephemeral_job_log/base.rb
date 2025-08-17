@@ -32,12 +32,19 @@ module EphemeralJobLog
       end.compact.sort_by(&:created_at).reverse
     end
 
-    def self.find_by_id(id)
+    def self.find(id)
+      raise ArgumentError, 'id must be provided' if id.nil?
+
       all.select { |job_log| job_log.id == id }&.first
     end
 
+    # alias for find
+    def self.find_by_id(id)
+      find(id)
+    end
+
     def self.find_by_position(position)
-      all.select { |job_log| job_log.potision == position }&.first
+      all.select { |job_log| job_log.position == position }&.first
     end
 
     def self.create!
