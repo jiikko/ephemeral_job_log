@@ -104,6 +104,13 @@ module EphemeralJobLog
       save!
     end
 
+    def update_progress!(progress)
+      raise ArgumentError, 'Progress must be between 0 and 100' unless progress.is_a?(Numeric) && progress.between?(0, 100)
+
+      @progress = progress
+      save!
+    end
+
     private
 
     def available_position
